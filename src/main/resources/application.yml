@@ -1,0 +1,32 @@
+# Spring
+spring:
+
+  # Datasource
+  datasource:
+    url: jdbc:postgresql://localhost:5432/raffle
+    username: postgres
+    password: secret
+    driver-class-name: org.postgresql.Driver
+
+  # Jpa
+  jpa:
+    database: postgresql
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+  redis:
+    host:
+  artemis:
+    host:
+
+# Server
+server:
+  port: 8080
+
+# Jwt
+jwt:
+  secret: saltingForRaffle
+  expirationTime: 6000000000
+  tokenPrefix: Bearer
+  headerString: Authorization
+
