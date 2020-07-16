@@ -76,7 +76,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
             }
 
             assert claims != null;
-            String role = (String) claims.get("user_type");
+            String role = (String) claims.get("role");
             List<GrantedAuthority> grantedAuthorities = AuthorityUtils.createAuthorityList(role);
 
             String email = claims.getSubject();

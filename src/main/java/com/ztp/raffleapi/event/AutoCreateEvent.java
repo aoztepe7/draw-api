@@ -2,8 +2,7 @@ package com.ztp.raffleapi.event;
 
 import com.ztp.raffleapi.domain.user.User;
 import com.ztp.raffleapi.domain.user.UserRepository;
-import com.ztp.raffleapi.domain.user.UserService;
-import com.ztp.raffleapi.domain.user.UserType;
+import com.ztp.raffleapi.domain.user.Role;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
@@ -23,9 +22,19 @@ public class AutoCreateEvent implements ApplicationListener<ApplicationReadyEven
         user.setName("Ali Oztepe");
         user.setPassword(bCryptPasswordEncoder.encode("12345678"));
         user.setPrefix("ADMIN");
-        user.setUserType(UserType.SYSTEM_ADMIN);
+        user.setRole(Role.ADMIN);
         user.setDeleted(false);
         user.setEnabled(true);
         userRepository.save(user);
+
+        User merchant = new User();
+        merchant.setMail("test@gmail.com");
+        merchant.setName("Ali Oztepe");
+        merchant.setPassword(bCryptPasswordEncoder.encode("12345678"));
+        merchant.setPrefix("MERCHANT");
+        merchant.setRole(Role.MERCHANT);
+        merchant.setDeleted(false);
+        merchant.setEnabled(true);
+        userRepository.save(merchant);
     }
 }

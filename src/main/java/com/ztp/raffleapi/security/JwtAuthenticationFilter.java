@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.ztp.raffleapi.config.JwtConfig;
 import com.ztp.raffleapi.domain.user.User;
-import com.ztp.raffleapi.domain.user.UserService;
 import com.ztp.raffleapi.message.LoginResponse;
 import com.ztp.raffleapi.message.ResponseCode;
 import io.jsonwebtoken.Claims;
@@ -29,15 +28,13 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     private final AuthenticationManager authenticationManager;
     private final JwtConfig jwtConfig;
     private final Gson gson;
-    private final UserService userService;
 
     private static final String USER = "user";
 
-    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtConfig jwtConfig, Gson gson, UserService userService) {
+    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtConfig jwtConfig, Gson gson) {
         this.authenticationManager = authenticationManager;
         this.jwtConfig = jwtConfig;
         this.gson = gson;
-        this.userService = userService;
     }
 
     @Override
@@ -66,7 +63,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
 
         Claims claims = Jwts.claims().setSubject(USER);
-        claims.put("user_type", ((org.springframework.security.core.userdetails.User) authResult.getPrincipal()).getAuthorities()
+        claims.put("role", ((org.springframework.security.core.userdetails.User) authResult.getPrincipal()).getAuthorities()
                 .stream().findFirst().get().toString());
 
         String token = Jwts.builder()
